@@ -1,9 +1,9 @@
 #!/bin/bash
-InfuraIDBeacon="Print Here"
-InfuraIDECDSA="Print Here"
-Wallet="Print Here"
-JSONpass="Print Here"
-keepwalletJSON="Print Here"
+InfuraIDBeacon=""
+InfuraIDECDSA=""
+Wallet=""
+JSONpass=""
+keepwalletJSON=""
 sudo ufw allow 22/tcp
 sudo ufw allow 3919/tcp
 sudo ufw allow 3920/tcp
@@ -19,7 +19,7 @@ mkdir -p $HOME/keep-beacon/persistence
 mkdir -p $HOME/keep-ecdsa/config
 mkdir -p $HOME/keep-ecdsa/keystore
 mkdir -p $HOME/keep-ecdsa/persistence
-cat <<EOF >>$HOME/keep-beacon/config/config.toml
+cat <<EOF >> $HOME/keep-beacon/config/config.toml
 # Ethereum host connection info.
 [ethereum]
  URL = "wss://ropsten.infura.io/ws/v3/$InfuraIDBeacon"
@@ -47,10 +47,10 @@ AnnouncedAddresses = ["/ip4/$SERVER_IP/tcp/3920"]
 [Storage]
  DataDir = "/mnt/persistence"
 EOF
-cat <<EOF >>$HOME/keep-beacon/keystore/keep_wallet.json
+cat <<EOF >> $HOME/keep-beacon/keystore/keep_wallet.json
 $keepwalletJSON
 EOF
-cat <<EOF >>$HOME/keep-ecdsa/config/config.toml
+cat <<EOF >> $HOME/keep-ecdsa/config/config.toml
 [ethereum]
  URL = "wss://ropsten.infura.io/ws/v3/$InfuraIDECDSA" 
  URLRPC = "https://ropsten.infura.io/v3/$InfuraIDECDSA"
@@ -79,7 +79,7 @@ Port = 3919
  DataDir = "/mnt/keep-ecdsa/persistence"
 [TSS]
 EOF
-cat <<EOF >>$HOME/keep-ecdsa/keystore/keep_wallet.json
+cat <<EOF >> $HOME/keep-ecdsa/keystore/keep_wallet.json
 $keepwalletJSON
 EOF
 export KEEP_CLIENT_ETHEREUM_PASSWORD="$JSONpass"
@@ -101,4 +101,3 @@ sudo docker run -d \
  -p 3919:3919 \
  keepnetwork/keep-ecdsa-client:v1.2.0-rc.5 \
  --config /mnt/keep-ecdsa/config/config.toml start
- 
